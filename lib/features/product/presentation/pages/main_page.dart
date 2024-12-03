@@ -1,3 +1,6 @@
+import 'package:cosmetics_shop/features/product/presentation/pages/catalog_page.dart';
+import 'package:cosmetics_shop/features/product/presentation/pages/profile_page.dart';
+import 'package:cosmetics_shop/features/product/presentation/pages/shopping_cart_page.dart';
 import 'package:cosmetics_shop/features/product/presentation/widgets/product_list.dart';
 import 'package:flutter/material.dart';
 
@@ -10,26 +13,17 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
-  final List<Widget> _screens = [
-    MainPage(),
+  final List<Widget> _screens = const [
+    HomePage(),
+    CatalogPage(),
+    ShoppingCartPage(),
+    ProfilePage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const Padding(
-        padding: EdgeInsets.fromLTRB(10, 140, 10, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Новинки",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Expanded(child: ProductList()),
-          ],
-        ),
-      ),
+      body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         fixedColor: Colors.black,
         currentIndex: _currentIndex,
@@ -71,5 +65,14 @@ class _MainPageState extends State<MainPage> {
         ],
       ),
     );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text("lala"));
   }
 }
