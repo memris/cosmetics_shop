@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
+  final int size;
 
-  const ProductCard({super.key, required this.product});
+  const ProductCard({super.key, required this.product, required this.size});
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +15,8 @@ class ProductCard extends StatelessWidget {
         Card(
           child: Image.asset(
             product.imageUrl,
-            width: 200,
-            height: 200,
+            width: size == 1 ? 100 : 200,
+            height: size == 1 ? 100 : 200,
           ),
         ),
         Text(product.type),

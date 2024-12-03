@@ -1,6 +1,7 @@
 import 'package:cosmetics_shop/features/product/presentation/pages/catalog_page.dart';
 import 'package:cosmetics_shop/features/product/presentation/pages/profile_page.dart';
 import 'package:cosmetics_shop/features/product/presentation/pages/shopping_cart_page.dart';
+import 'package:cosmetics_shop/features/product/presentation/widgets/product_horizontal_scroll.dart';
 import 'package:cosmetics_shop/features/product/presentation/widgets/product_list.dart';
 import 'package:flutter/material.dart';
 
@@ -73,6 +74,30 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("lala"));
+    return const Padding(
+      padding:  EdgeInsets.only(left: 8),
+      child:  Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Spacer(),
+          Text("Новинки", style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),),
+          Expanded(child: ProductHorizontalScroll()),
+          Text("Акции", style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),),
+          Expanded(child: ProductHorizontalScroll()),
+          Text("Хиты", style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),),
+          Expanded(child: ProductHorizontalScroll()),
+        ],
+      ),
+    );
   }
 }

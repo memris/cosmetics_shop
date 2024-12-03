@@ -14,7 +14,7 @@ class CatalogPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Новинки",
+              "Каталог",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             Expanded(child: ProductList()),

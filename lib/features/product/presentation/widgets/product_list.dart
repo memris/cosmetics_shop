@@ -18,7 +18,7 @@ class ProductList extends StatelessWidget {
         itemBuilder: (context, index) {
           final product = testProducts[index];
 
-          return ProductCard(product: product);
+          return ProductCard(product: product,size: 2,);
         },
       );
   }
