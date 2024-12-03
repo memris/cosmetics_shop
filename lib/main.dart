@@ -1,4 +1,5 @@
-import 'package:cosmetics_shop/features/product/presentation/pages/product_list_page.dart';
+import 'package:cosmetics_shop/features/product/presentation/pages/main_page.dart';
+import 'package:cosmetics_shop/features/product/presentation/widgets/product_list.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const ProductListPage(),
+      home: const MainPage(),
       debugShowCheckedModeBanner: false,
     );
   }

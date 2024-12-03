@@ -2,20 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:cosmetics_shop/features/product/presentation/widgets/product_card.dart';
 import '../../data/product_data.dart';
 
-class ProductListPage extends StatelessWidget {
-  const ProductListPage({super.key});
+class ProductList extends StatelessWidget {
+  const ProductList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.all(0),
-      child: GridView.builder(
+    return  GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
-          childAspectRatio: 0.75,
+          mainAxisSpacing: 18,
+          childAspectRatio: 0.65,
         ),
         itemCount: testProducts.length,
         itemBuilder: (context, index) {
@@ -23,7 +20,6 @@ class ProductListPage extends StatelessWidget {
 
           return ProductCard(product: product);
         },
-      ),
-    ));
+      );
   }
 }

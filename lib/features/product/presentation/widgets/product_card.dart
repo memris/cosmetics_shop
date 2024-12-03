@@ -20,7 +20,8 @@ class ProductCard extends StatelessWidget {
         ),
         Text(product.type),
         Text(product.title),
-        Text("${product.price} ₽"),
+        Text("${product.price} ₽",
+        style: const TextStyle(fontWeight: FontWeight.bold),),
       ],
     );
   }
