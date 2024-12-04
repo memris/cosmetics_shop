@@ -1,10 +1,13 @@
+import 'package:cosmetics_shop/features/product/data/category_data.dart';
 import 'package:cosmetics_shop/features/product/presentation/pages/catalog_page.dart';
 import 'package:cosmetics_shop/features/product/presentation/pages/profile_page.dart';
 import 'package:cosmetics_shop/features/product/presentation/pages/shopping_cart_page.dart';
+import 'package:cosmetics_shop/features/product/presentation/widgets/colored_line.dart';
 import 'package:cosmetics_shop/features/product/presentation/widgets/product_horizontal_scroll.dart';
 import 'package:cosmetics_shop/features/product/presentation/widgets/product_list.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/category_scroll.dart';
 import '../widgets/main_slider.dart';
 
 class MainPage extends StatefulWidget {
@@ -30,7 +33,9 @@ class _MainPageState extends State<MainPage> {
       body: _screens[_currentIndex],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: Colors.grey.shade200))
+          border: Border(
+            top: BorderSide(color: Colors.grey.shade200),
+          ),
         ),
         child: BottomNavigationBar(
           backgroundColor: Colors.white,
@@ -90,40 +95,88 @@ class HomePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Flexible(child: MainSlider()),
-          // Spacer(),
-         const Padding(
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 8),
+          ),
+          SizedBox(
+            height: 110,
+            child: CategoryScroll(categories: categoryData),
+          ),
+          const Padding(
             padding: const EdgeInsets.only(left: 8),
-            child: Text(
-              "Новинки",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Новинки",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  ),
+                ),
+                ColoredLine(mainPageCategory: "Новинки"),
+                SizedBox(
+                  height: 20,
+                ),
+              ],
             ),
           ),
-         const Flexible(child: ProductHorizontalScroll()),
-         const Padding(
+          const Flexible(
+            child: ProductHorizontalScroll(mainPageCategory: "Новинки"),
+          ),
+          const Padding(
             padding: const EdgeInsets.only(left: 8),
-            child: Text(
-              "Акции",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Акции",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  ),
+                ),
+                ColoredLine(mainPageCategory: "Акции"),
+                SizedBox(
+                  height: 20,
+                ),
+              ],
             ),
           ),
-         const Flexible(child: ProductHorizontalScroll()),
-        const  Padding(
+          const Flexible(
+            child: ProductHorizontalScroll(mainPageCategory: "Акции"),
+          ),
+          const Padding(
             padding: const EdgeInsets.only(left: 8),
-            child: Text(
-              "Хиты",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Хиты",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  ),
+                ),
+                ColoredLine(mainPageCategory: "Хиты"),
+                SizedBox(
+                  height: 20,
+                ),
+              ],
             ),
           ),
-          const Flexible(child: ProductHorizontalScroll()),
+          const Flexible(
+            child: ProductHorizontalScroll(mainPageCategory: "Хиты"),
+          ),
         ],
       ),
     );

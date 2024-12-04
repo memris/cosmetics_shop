@@ -3,27 +3,30 @@ import 'package:cosmetics_shop/features/product/presentation/widgets/product_car
 import 'package:flutter/material.dart';
 
 class ProductHorizontalScroll extends StatelessWidget {
-  const ProductHorizontalScroll({super.key});
+  final String mainPageCategory;
+
+  const ProductHorizontalScroll({super.key, required this.mainPageCategory});
 
   @override
   Widget build(BuildContext context) {
+    final filteredProducts = testProducts
+        .where((product) => product.mainPageCategory == mainPageCategory)
+        .toList();
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-         children:
-           testProducts.map((product) {
-             return Padding(
-               padding: const EdgeInsets.symmetric(horizontal: 5),
-               child: ProductCard(product: product,),
-             );
-           }).toList()
-         ,
-       ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: filteredProducts.map((product) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: ProductCard(product: product),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
-
 }

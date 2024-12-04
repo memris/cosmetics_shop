@@ -6,6 +6,7 @@ class Product {
   final String cosmeticsLine;
   final String effect;
   final String category;
+  final String? mainPageCategory;
   final double price;
   final String imageUrl;
 
@@ -16,6 +17,7 @@ class Product {
     required this.cosmeticsLine,
     required this.effect,
     required this.category,
+    this.mainPageCategory,
     required this.price,
     required this.imageUrl});
 }

@@ -12,7 +12,7 @@ class _MainSliderState extends State<MainSlider> {
     {
       'image': 'assets/main_1.png',
       'title': 'Скидка -15%',
-      'subtitle': 'Сыворотка',
+      'subtitle': 'Сыворотка HA EYE & NECK SERUM',
       'buttonText': 'Перейти к акции',
     },
     {
@@ -135,7 +135,7 @@ class _MainSliderState extends State<MainSlider> {
                   padding: const EdgeInsets.symmetric(horizontal: 1.5),
                   child: Icon(
                     Icons.circle,
-                    size: 14,
+                    size: 11,
                     color: _currentIndex == index
                         ? Colors.white
                         : Colors.white.withOpacity(0.5),
