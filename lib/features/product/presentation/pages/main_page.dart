@@ -5,6 +5,8 @@ import 'package:cosmetics_shop/features/product/presentation/widgets/product_hor
 import 'package:cosmetics_shop/features/product/presentation/widgets/product_list.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/main_slider.dart';
+
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
@@ -74,28 +76,47 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding:  EdgeInsets.only(left: 8),
-      child:  Column(
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Spacer(),
-          Text("Новинки", style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),),
-          Expanded(child: ProductHorizontalScroll()),
-          Text("Акции", style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),),
-          Expanded(child: ProductHorizontalScroll()),
-          Text("Хиты", style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),),
-          Expanded(child: ProductHorizontalScroll()),
+          Flexible(child: MainSlider()),
+          // Spacer(),
+         const Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Text(
+              "Новинки",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+          ),
+         const Flexible(child: ProductHorizontalScroll()),
+         const Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Text(
+              "Акции",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+          ),
+         const Flexible(child: ProductHorizontalScroll()),
+        const  Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Text(
+              "Хиты",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+          ),
+          const Flexible(child: ProductHorizontalScroll()),
         ],
       ),
     );
