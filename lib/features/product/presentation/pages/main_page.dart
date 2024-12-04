@@ -89,6 +89,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: ClampingScrollPhysics(),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -96,7 +97,7 @@ class HomePage extends StatelessWidget {
         children: [
           Flexible(child: MainSlider()),
           const Padding(
-            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 8),
+            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
           ),
           SizedBox(
             height: 110,
@@ -177,6 +178,7 @@ class HomePage extends StatelessWidget {
           const Flexible(
             child: ProductHorizontalScroll(mainPageCategory: "Хиты"),
           ),
+         const SizedBox(height: 50,),
         ],
       ),
     );
