@@ -1,7 +1,8 @@
 import 'package:cosmetics_shop/features/product/presentation/pages/selection_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import '../../data/product_data.dart';
+import '../../domain/entities/product.dart';
 import '../widgets/product_list.dart';
 
 class CatalogPage extends StatefulWidget {
@@ -13,7 +14,7 @@ class CatalogPage extends StatefulWidget {
 
 final Map<String, List<String>> options = {
   "Назначение": ["Для лица", "Для тела", "Для волос"],
-  "Тип средства": ["Крем", "Сыворотка", "Тоник"],
+  "Тип средства": ["Крем", "Сыворотка", "Тонер"],
   "Тип кожи": ["Сухая", "Комбинированная", "Жирная"],
   "Линия косметики": ["Muse", "Forever Young"],
   "Наборы": [],
@@ -22,12 +23,28 @@ final Map<String, List<String>> options = {
 };
 
 class _CatalogPageState extends State<CatalogPage> {
-  String _selectedOption = "";
+  Map<String, String> _selectedFilters = {};
   bool _isFiltered = false;
 
   @override
   void initState() {
     super.initState();
+  }
+
+  List<Product> _filterProducts(List<Product> products) {
+    if (_selectedFilters.isEmpty) return products;
+
+    return products.where((product) {
+      bool matches = true;
+
+      _selectedFilters.forEach((key, value) {
+        if (key == "Тип средства" && product.type != value) matches = false;
+        if (key == "Тип кожи" && product.skinType != value) matches = false;
+        if (key == "Категория" && product.category != value) matches = false;
+      });
+
+      return matches;
+    }).toList();
   }
 
   @override
@@ -49,9 +66,9 @@ class _CatalogPageState extends State<CatalogPage> {
                         options: entry.value,
                         onSelectedOption: (option) {
                           setState(() {
-                            _selectedOption = option;
-                            Navigator.pop(context);
+                            _selectedFilters[entry.key] = option;
                             _isFiltered = true;
+                            Navigator.pop(context);
                           });
                         },
                       ),
@@ -73,7 +90,11 @@ class _CatalogPageState extends State<CatalogPage> {
               );
             }).toList()
           else
-            Expanded(child: ProductList()),
+            Expanded(
+              child: ProductList(
+                products: _filterProducts(testProducts),
+              ),
+            ),
         ],
       ),
     );
