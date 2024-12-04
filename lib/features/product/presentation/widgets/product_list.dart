@@ -20,7 +20,10 @@ class ProductList extends StatelessWidget {
       itemBuilder: (context, index) {
         final product = products[index];
 
-        return ProductCard(product: product, size: 2);
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 6),
+          child: ProductCard(product: product,),
+        );
       },
     );
   }

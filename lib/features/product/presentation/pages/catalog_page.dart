@@ -15,8 +15,8 @@ class CatalogPage extends StatefulWidget {
 final Map<String, List<String>> options = {
   "Назначение": ["Для лица", "Для тела", "Для волос"],
   "Тип средства": ["Крем", "Сыворотка", "Тонер"],
-  "Тип кожи": ["Сухая", "Комбинированная", "Жирная"],
-  "Линия косметики": ["Muse", "Forever Young"],
+  "Тип кожи": ["Жирная", "Комбинированная", "Нормальная", "Сухая", "Любой тип"],
+  "Линия косметики": ["Muse", "Forever Young", "Illustious", "Unstress"],
   "Наборы": [],
   "Акции": [],
   "Консультации с косметологом": [],
@@ -39,13 +39,15 @@ class _CatalogPageState extends State<CatalogPage> {
 
       _selectedFilters.forEach((key, value) {
         if (key == "Тип средства" && product.type != value) matches = false;
-        if (key == "Тип кожи" && product.skinType != value) matches = false;
+        if (key == "Тип кожи" && !product.skinTypes.contains(value)) matches = false;
+        if (key == "Линия косметики" && product.cosmeticsLine != value) matches = false;
         if (key == "Категория" && product.category != value) matches = false;
       });
 
       return matches;
     }).toList();
   }
+
 
   @override
   Widget build(BuildContext context) {

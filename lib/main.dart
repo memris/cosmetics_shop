@@ -1,5 +1,4 @@
 import 'package:cosmetics_shop/features/product/presentation/pages/main_page.dart';
-import 'package:cosmetics_shop/features/product/presentation/widgets/product_list.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,15 +8,26 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme(
+          brightness: Brightness.light,
+          primary: Colors.black,
+          onPrimary: Colors.white,
+          secondary: Colors.grey,
+          onSecondary: Colors.black,
+          surface: Colors.grey.shade100,
+          onSurface: Colors.black,
+          error: Colors.red,
+          onError: Colors.white,
+        ),
+        scaffoldBackgroundColor: Colors.white,
         useMaterial3: true,
       ),
+
       home: const MainPage(),
       debugShowCheckedModeBanner: false,
     );

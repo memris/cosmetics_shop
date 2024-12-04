@@ -1,6 +1,5 @@
 import 'package:cosmetics_shop/features/product/data/product_data.dart';
 import 'package:cosmetics_shop/features/product/presentation/widgets/product_card.dart';
-import 'package:cosmetics_shop/features/product/presentation/widgets/product_list.dart';
 import 'package:flutter/material.dart';
 
 class ProductHorizontalScroll extends StatelessWidget {
@@ -8,17 +7,18 @@ class ProductHorizontalScroll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 200,
-
-      padding: EdgeInsets.symmetric(horizontal: 10),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
        child: Row(
-
+        crossAxisAlignment: CrossAxisAlignment.start,
          children:
            testProducts.map((product) {
-             return ProductCard(product: product,size: 1,);
+             return Padding(
+               padding: const EdgeInsets.symmetric(horizontal: 5),
+               child: ProductCard(product: product,),
+             );
            }).toList()
          ,
        ),

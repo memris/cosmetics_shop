@@ -26,46 +26,53 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: _screens[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        fixedColor: Colors.black,
-        currentIndex: _currentIndex,
-        type: BottomNavigationBarType.fixed,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-              icon: Image.asset(
-                "assets/icons/home.png",
-                height: 32,
-                width: 32,
-              ),
-              label: "Главная"),
-          BottomNavigationBarItem(
-              icon: Image.asset(
-                "assets/icons/search.png",
-                height: 32,
-                width: 32,
-              ),
-              label: "Каталог"),
-          BottomNavigationBarItem(
-              icon: Image.asset(
-                "assets/icons/shopping.png",
-                height: 32,
-                width: 32,
-              ),
-              label: "Корзина"),
-          BottomNavigationBarItem(
-              icon: Image.asset(
-                "assets/icons/user.png",
-                height: 32,
-                width: 32,
-              ),
-              label: "Профиль")
-        ],
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          border: Border(top: BorderSide(color: Colors.grey.shade200))
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.white,
+          fixedColor: Colors.black,
+          currentIndex: _currentIndex,
+          type: BottomNavigationBarType.fixed,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+                icon: Image.asset(
+                  "assets/icons/home.png",
+                  height: 32,
+                  width: 32,
+                ),
+                label: "Главная"),
+            BottomNavigationBarItem(
+                icon: Image.asset(
+                  "assets/icons/search.png",
+                  height: 32,
+                  width: 32,
+                ),
+                label: "Каталог"),
+            BottomNavigationBarItem(
+                icon: Image.asset(
+                  "assets/icons/shopping.png",
+                  height: 32,
+                  width: 32,
+                ),
+                label: "Корзина"),
+            BottomNavigationBarItem(
+                icon: Image.asset(
+                  "assets/icons/user.png",
+                  height: 32,
+                  width: 32,
+                ),
+                label: "Профиль")
+          ],
+        ),
       ),
     );
   }
