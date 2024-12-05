@@ -67,7 +67,7 @@ class _CatalogPageState extends State<CatalogPage> {
           if (!_isFiltered)
             SearchBar(
               elevation: WidgetStateProperty.all(1),
-              backgroundColor: WidgetStatePropertyAll(Colors.white),
+              backgroundColor: const WidgetStatePropertyAll(Colors.white),
               hintText: "Поиск",
               hintStyle: WidgetStatePropertyAll(
                   TextStyle(fontSize: 18, color: Colors.grey.shade600)),
@@ -88,7 +88,7 @@ class _CatalogPageState extends State<CatalogPage> {
               ),
             ),
           if (!_isFiltered)
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
           Expanded(
@@ -127,9 +127,9 @@ class _CatalogPageState extends State<CatalogPage> {
                                           Text(
                                             entry.key,
                                             textAlign: TextAlign.start,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontWeight: FontWeight.w500,
-                                              fontSize: 24,
+                                              fontSize: 20,
                                               color: Colors.black,
                                             ),
                                           ),
@@ -143,9 +143,9 @@ class _CatalogPageState extends State<CatalogPage> {
                                     : Text(
                                         entry.key,
                                         textAlign: TextAlign.start,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontWeight: FontWeight.w500,
-                                          fontSize: 24,
+                                          fontSize: 20,
                                           color: Colors.black,
                                         ),
                                       ),
@@ -160,21 +160,21 @@ class _CatalogPageState extends State<CatalogPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        constraints: BoxConstraints(maxWidth: 500),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        constraints: const BoxConstraints(maxWidth: 500),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                               width: 200,
                               child: const Text(
-                                "Средства для жирной кожи",
+                                "Средства",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600, fontSize: 26),
                               ),
                             ),
                             Text("${testProducts.length} продукта"),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             SizedBox(
                               height: 50,
                               child: SingleChildScrollView(
@@ -183,7 +183,7 @@ class _CatalogPageState extends State<CatalogPage> {
                                   children: [
                                     ElevatedButton(
                                       onPressed: () {},
-                                      child: Text(
+                                      child: const Text(
                                         "Увлажнение",
                                         style: TextStyle(color: Colors.black),
                                       ),
@@ -191,15 +191,15 @@ class _CatalogPageState extends State<CatalogPage> {
                                     SizedBox(width: 10),
                                     ElevatedButton(
                                       onPressed: () {},
-                                      child: Text(
+                                      child: const Text(
                                         "Очищение",
                                         style: TextStyle(color: Colors.black),
                                       ),
                                     ),
-                                    SizedBox(width: 10),
+                                    const SizedBox(width: 10),
                                     ElevatedButton(
                                       onPressed: () {},
-                                      child: Text(
+                                      child: const Text(
                                         "Регенерация",
                                         style: TextStyle(color: Colors.black),
                                       ),
@@ -222,7 +222,6 @@ class _CatalogPageState extends State<CatalogPage> {
           if (!_isFiltered)
             Stack(children: [
               Container(
-                height: 195,
                 color: Colors.grey.shade200,
               ),
               Image.asset(
@@ -237,7 +236,7 @@ class _CatalogPageState extends State<CatalogPage> {
                   children: [
                     Container(
                       width: 350,
-                      child: Text(
+                      child: const Text(
                         "Составим схему идеального домашнего ухода",
                         style: TextStyle(
                           fontSize: 20,
@@ -245,19 +244,18 @@ class _CatalogPageState extends State<CatalogPage> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
-                    Text(
+                    const Text(
                       "10 вопросов о вашей коже",
                       style: TextStyle(fontSize: 18),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     ElevatedButton(
                       onPressed: () {},
-                      child: Text("Пройти тест"),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black.withOpacity(0.75),
                         elevation: 0,
@@ -266,6 +264,7 @@ class _CatalogPageState extends State<CatalogPage> {
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
+                      child: Text("Пройти тест"),
                     ),
                   ],
                 ),

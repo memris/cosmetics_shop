@@ -3,8 +3,9 @@ import 'package:cosmetics_shop/features/product/presentation/pages/catalog_page.
 import 'package:cosmetics_shop/features/product/presentation/pages/profile_page.dart';
 import 'package:cosmetics_shop/features/product/presentation/pages/shopping_cart_page.dart';
 import 'package:cosmetics_shop/features/product/presentation/widgets/colored_line.dart';
+import 'package:cosmetics_shop/features/product/presentation/widgets/effects_list.dart';
 import 'package:cosmetics_shop/features/product/presentation/widgets/product_horizontal_scroll.dart';
-import 'package:cosmetics_shop/features/product/presentation/widgets/product_list.dart';
+import 'package:cosmetics_shop/features/product/presentation/widgets/scheme_horizontal_scroll.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/category_scroll.dart';
@@ -89,7 +90,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      physics: ClampingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -128,8 +129,72 @@ class HomePage extends StatelessWidget {
           const Flexible(
             child: ProductHorizontalScroll(mainPageCategory: "Новинки"),
           ),
+          const SizedBox(
+            height: 24,
+          ),
+          Stack(children: [
+            Container(
+              height: 250,
+              color: Colors.grey.shade200,
+            ),
+            Image.asset(
+              "assets/background_image_3.png",
+              fit: BoxFit.cover,
+            height: 250,
+            width: 450,
+            //  scale: 0.5,
+            ),
+            Positioned(
+              top: 20,
+              left: 20,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Моя схема домашнего ухода",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Flexible(
+                    fit: FlexFit.loose,
+                      child: SchemeHorizontalScroll()),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                          width: 193,
+                          child: const Text(
+                              "Ответьте на 10 вопросов, и мы подберем нужный уход ",
+                            style: TextStyle(fontSize: 13),),),
+                      const SizedBox(width: 15,),
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.black.withOpacity(0.75),
+                          elevation: 0,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                        child: const Text("Пройти тест"),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ]),
           const Padding(
-            padding: const EdgeInsets.only(left: 8),
+            padding: EdgeInsets.only(left: 8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -153,6 +218,7 @@ class HomePage extends StatelessWidget {
           const Flexible(
             child: ProductHorizontalScroll(mainPageCategory: "Акции"),
           ),
+          const EffectsList(),
           const Padding(
             padding: const EdgeInsets.only(left: 8),
             child: Column(
@@ -178,7 +244,9 @@ class HomePage extends StatelessWidget {
           const Flexible(
             child: ProductHorizontalScroll(mainPageCategory: "Хиты"),
           ),
-         const SizedBox(height: 50,),
+          const SizedBox(
+            height: 50,
+          ),
         ],
       ),
     );

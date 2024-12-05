@@ -91,10 +91,10 @@ class _MainSliderState extends State<MainSlider> {
                           style: const TextStyle(
                               color: Colors.white,
                               fontSize: 30,
-                              fontWeight: FontWeight.bold),
+                              fontWeight: FontWeight.w400),
                         ),
                         Container(
-                          width: 200,
+                          width: 150,
                           child: Text(
                             data['subtitle']!,
                             style: const TextStyle(color: Colors.white),
