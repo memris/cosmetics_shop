@@ -1,3 +1,4 @@
+import 'package:cosmetics_shop/features/product/presentation/pages/filters_page.dart';
 import 'package:cosmetics_shop/features/product/presentation/pages/selection_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ final Map<String, List<String>> options = {
   "Тип средства": ["Крем", "Сыворотка", "Тонер"],
   "Тип кожи": ["Жирная", "Комбинированная", "Нормальная", "Сухая", "Любой тип"],
   "Линия косметики": ["Muse", "Forever Young", "Illustious", "Unstress"],
-  "Эффект": ["Очищение","Увлажнение",  "Регенерация"],
+  "Эффект": ["Очищение", "Увлажнение", "Регенерация"],
   "Наборы": [],
   "Акции": [],
   "Консультации с косметологом": [],
@@ -43,8 +44,17 @@ class _CatalogPageState extends State<CatalogPage> {
   String _generateTitle() {
     String title = "Средства";
 
-    if (_selectedFilters.containsKey("Тип кожи")) {
-      title += " для: ${_selectedFilters["Тип кожи"]} кожа";
+    switch (_selectedFilters["Тип кожи"]) {
+      case "Жирная":
+        title += " для жирной кожи";
+      case "Комбинированная":
+        title += " для комбинированной кожи";
+      case "Нормальная":
+        title += " для нормальной кожи";
+      case "Сухая":
+        title += " для сухой кожи";
+      case "Любой тип":
+        title += " для кожи любого типа";
     }
 
     if (_selectedFilters.containsKey("Линия косметики")) {
@@ -57,6 +67,17 @@ class _CatalogPageState extends State<CatalogPage> {
     return title;
   }
 
+  List<Product> _sortProducts(List<Product> products) {
+    final sortOption = _selectedFilters['Сортировка'];
+    if (sortOption == 'По популярности') {
+      //products.sort((a, b) => b.popularity.compareTo(a.popularity));
+    } else if (sortOption == 'По возрастанию цены') {
+      products.sort((a, b) => a.price.compareTo(b.price));
+    } else if (sortOption == 'По убыванию цены') {
+      products.sort((a, b) => b.price.compareTo(a.price));
+    }
+    return products;
+  }
   List<Product> _filterProducts(List<Product> products) {
     List<Product> filteredProducts = products;
 
@@ -73,6 +94,7 @@ class _CatalogPageState extends State<CatalogPage> {
             matches = false;
           }
           if (key == "Категория" && product.category != value) matches = false;
+          if (key == "Назначение" && product.purpose != value) matches = false;
         });
 
         return matches;
@@ -85,8 +107,11 @@ class _CatalogPageState extends State<CatalogPage> {
           .toList();
     }
 
+    filteredProducts = _sortProducts(filteredProducts);
+
     return filteredProducts;
   }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -99,7 +124,8 @@ class _CatalogPageState extends State<CatalogPage> {
               backgroundColor: const WidgetStatePropertyAll(Colors.white),
               hintText: "Поиск",
               hintStyle: WidgetStatePropertyAll(
-                  TextStyle(fontSize: 18, color: Colors.grey.shade600),),
+                TextStyle(fontSize: 18, color: Colors.grey.shade600),
+              ),
               leading: const Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -196,14 +222,46 @@ class _CatalogPageState extends State<CatalogPage> {
                           children: [
                             Container(
                               width: 200,
-                              child:  Text(
+                              child: Text(
                                 _generateTitle(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontWeight: FontWeight.w600, fontSize: 26),
                               ),
                             ),
-                            Text(
-                                "${_filterProducts(testProducts).length} продуктов"),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "${_filterProducts(testProducts).length} продуктов",
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => FiltersPage(
+                                            filterOptions: options,
+                                            selectedFilters: _selectedFilters,
+                                            onApplyFilters: (Map<String, String>
+                                                newFilters) {
+                                              setState(() {
+                                                _selectedFilters =
+                                                    newFilters;
+                                                _isFiltered =
+                                                    _selectedFilters.isNotEmpty;
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    icon: Image.asset(
+                                      'assets/icons/filter.png',
+                                      scale: 4,
+                                    ))
+                              ],
+                            ),
                             const SizedBox(height: 8),
                             SizedBox(
                               height: 50,

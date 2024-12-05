@@ -7,6 +7,7 @@ class Product {
   final String effect;
   final String category;
   final String? mainPageCategory;
+  final String? purpose;
   final double price;
   final String imageUrl;
 
@@ -18,6 +19,7 @@ class Product {
     required this.effect,
     required this.category,
     this.mainPageCategory,
+    this.purpose,
     required this.price,
     required this.imageUrl});
 }
