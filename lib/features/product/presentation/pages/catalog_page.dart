@@ -113,257 +113,273 @@ class _CatalogPageState extends State<CatalogPage> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 80, 0, 0),
-      child: Column(
-        children: [
-          if (!_isFiltered)
-            SearchBar(
-              elevation: WidgetStateProperty.all(1),
-              backgroundColor: const WidgetStatePropertyAll(Colors.white),
-              hintText: "Поиск",
-              hintStyle: WidgetStatePropertyAll(
-                TextStyle(fontSize: 18, color: Colors.grey.shade600),
-              ),
-              leading: const Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Icon(
-                    Icons.search,
-                    color: Colors.grey,
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                ],
-              ),
-            ),
-          if (!_isFiltered)
-            const SizedBox(
-              height: 15,
-            ),
-          Expanded(
-            child: !_isFiltered
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: options.entries.map((entry) {
-                      return Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 0, 60, 0),
-                        child: Column(
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SelectionPage(
-                                      filterName: entry.key,
-                                      options: entry.value,
-                                      onSelectedOption: (option) {
-                                        setState(() {
-                                          _selectedFilters[entry.key] = option;
-                                          _isFiltered = true;
-                                          Navigator.pop(context);
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: entry.key == "Акции"
-                                    ? Row(
-                                        children: [
-                                          Text(
-                                            entry.key,
-                                            textAlign: TextAlign.start,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 20,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          SizedBox(width: 3),
-                                          Image.asset(
-                                            "assets/promotion.png",
-                                            scale: 3.5,
-                                          ),
-                                        ],
-                                      )
-                                    : Text(
-                                        entry.key,
-                                        textAlign: TextAlign.start,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 20,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                  )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        constraints: const BoxConstraints(maxWidth: 500),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 200,
-                              child: Text(
-                                _generateTitle(),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 26),
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "${_filterProducts(testProducts).length} продуктов",
-                                  style: TextStyle(fontSize: 16),
-                                ),
-                                IconButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => FiltersPage(
-                                            filterOptions: options,
-                                            selectedFilters: _selectedFilters,
-                                            onApplyFilters: (Map<String, String>
-                                                newFilters) {
-                                              setState(() {
-                                                _selectedFilters =
-                                                    newFilters;
-                                                _isFiltered =
-                                                    _selectedFilters.isNotEmpty;
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    icon: Image.asset(
-                                      'assets/icons/filter.png',
-                                      scale: 4,
-                                    ))
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            SizedBox(
-                              height: 50,
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: options["Эффект"]!.map((effect) {
-                                    final isSelected =
-                                        _selectedEffect == effect;
-                                    return Padding(
-                                      padding: const EdgeInsets.only(right: 10),
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            _selectedEffect =
-                                                isSelected ? null : effect;
-                                          });
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          elevation: 0,
-                                          backgroundColor: isSelected
-                                              ? Colors.black
-                                              : Colors.grey.shade200,
-                                          foregroundColor: isSelected
-                                              ? Colors.white
-                                              : Colors.black,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(11),
-                                          ),
-                                        ),
-                                        child: Text(effect),
-                                      ),
-                                    );
-                                  }).toList(),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: ProductList(
-                          products: _filterProducts(testProducts),
-                        ),
-                      ),
-                    ],
-                  ),
-          ),
-          if (!_isFiltered)
-            Stack(children: [
-              Container(
-                color: Colors.grey.shade200,
-              ),
-              Image.asset(
-                "assets/background_image_1.png",
-                fit: BoxFit.fill,
-              ),
-              Positioned(
-                top: 20,
-                left: 20,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (!_isFiltered)
+              SearchBar(
+                elevation: WidgetStateProperty.all(1),
+                backgroundColor: const WidgetStatePropertyAll(Colors.white),
+                hintText: "Поиск",
+                hintStyle: WidgetStatePropertyAll(
+                  TextStyle(fontSize: 18, color: Colors.grey.shade600),
+                ),
+                leading: const Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      width: 350,
-                      child: const Text(
-                        "Составим схему идеального домашнего ухода",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                    SizedBox(
+                      width: 15,
                     ),
-                    const SizedBox(
-                      height: 5,
+                    Icon(
+                      Icons.search,
+                      color: Colors.grey,
                     ),
-                    const Text(
-                      "10 вопросов о вашей коже",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black.withOpacity(0.75),
-                        elevation: 0,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      ),
-                      child: const Text("Пройти тест"),
+                    SizedBox(
+                      width: 15,
                     ),
                   ],
                 ),
               ),
-            ]),
-        ],
+            if (!_isFiltered)
+              const SizedBox(
+                height: 15,
+              ),
+            Flexible(
+              fit: FlexFit.loose,
+              child: !_isFiltered
+                  ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ...options.entries.map((entry) {
+                    return Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 0, 60, 0),
+                      child: Column(
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SelectionPage(
+                                    filterName: entry.key,
+                                    options: entry.value,
+                                    onSelectedOption: (option) {
+                                      setState(() {
+                                        _selectedFilters[entry.key] = option;
+                                        _isFiltered = true;
+                                        Navigator.pop(context);
+                                      });
+                                    },
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: entry.key == "Акции"
+                                  ? Row(
+                                children: [
+                                  Text(
+                                    entry.key,
+                                    textAlign: TextAlign.start,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 20,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  SizedBox(width: 3),
+                                  Image.asset(
+                                    "assets/promotion.png",
+                                    scale: 3.5,
+                                  ),
+                                ],
+                              )
+                                  : Text(
+                                entry.key,
+                                textAlign: TextAlign.start,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 20,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                 SizedBox(height: 15,),
+                ],
+              )
+                  : Column(
+                mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                         // constraints: const BoxConstraints(maxWidth: 500),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 200,
+                                child: Text(
+                                  _generateTitle(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w600, fontSize: 26),
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "${_filterProducts(testProducts).length} продуктов",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => FiltersPage(
+                                              filterOptions: options,
+                                              selectedFilters: _selectedFilters,
+                                              onApplyFilters: (Map<String, String>
+                                                  newFilters) {
+                                                setState(() {
+                                                  _selectedFilters =
+                                                      newFilters;
+                                                  _isFiltered =
+                                                      _selectedFilters.isNotEmpty;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      icon: Image.asset(
+                                        'assets/icons/filter.png',
+                                        scale: 4,
+                                      ))
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              SizedBox(
+                                height: 50,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: options["Эффект"]!.map((effect) {
+                                      final isSelected =
+                                          _selectedEffect == effect;
+                                      return Padding(
+                                        padding: const EdgeInsets.only(right: 10),
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              _selectedEffect =
+                                                  isSelected ? null : effect;
+                                            });
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            elevation: 0,
+                                            backgroundColor: isSelected
+                                                ? Colors.black
+                                                : Colors.grey.shade200,
+                                            foregroundColor: isSelected
+                                                ? Colors.white
+                                                : Colors.black,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(11),
+                                            ),
+                                          ),
+                                          child: Text(effect),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Flexible(
+                          fit: FlexFit.loose,
+                          child: ProductList(
+                            products: _filterProducts(testProducts),
+                          ),
+                        ),
+                      ],
+                    ),
+            ),
+           if (!_isFiltered) _buildBottomStack()
+          ],
+        ),
       ),
     );
   }
+}
+
+
+Widget _buildBottomStack() {
+  return Align(
+    alignment: Alignment.bottomCenter,
+    child: Stack(
+      children: [
+        Container(
+          color: Colors.grey.shade200,
+        ),
+        Image.asset(
+          "assets/background_image_1.png",
+          fit: BoxFit.fill,
+        ),
+        Positioned(
+          top: 20,
+          left: 20,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 350,
+                child: const Text(
+                  "Составим схему идеального домашнего ухода",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 5),
+              const Text(
+                "10 вопросов о вашей коже",
+                style: TextStyle(fontSize: 18),
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black.withOpacity(0.75),
+                  elevation: 0,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+                child: const Text("Пройти тест"),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
 }
