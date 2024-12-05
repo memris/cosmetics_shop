@@ -8,7 +8,7 @@ import '../widgets/product_list.dart';
 class CatalogPage extends StatefulWidget {
   final String? initialCategory;
 
-  const CatalogPage({Key? key, this.initialCategory}) : super(key: key);
+  const CatalogPage({super.key, this.initialCategory});
 
   @override
   State<CatalogPage> createState() => _CatalogPageState();
@@ -19,7 +19,7 @@ final Map<String, List<String>> options = {
   "Тип средства": ["Крем", "Сыворотка", "Тонер"],
   "Тип кожи": ["Жирная", "Комбинированная", "Нормальная", "Сухая", "Любой тип"],
   "Линия косметики": ["Muse", "Forever Young", "Illustious", "Unstress"],
-  "Эффект": ["Увлажнение", "Очищение", "Регенерация"],
+  "Эффект": ["Очищение","Увлажнение",  "Регенерация"],
   "Наборы": [],
   "Акции": [],
   "Консультации с косметологом": [],
@@ -28,6 +28,7 @@ final Map<String, List<String>> options = {
 class _CatalogPageState extends State<CatalogPage> {
   late Map<String, String> _selectedFilters;
   bool _isFiltered = false;
+  String? _selectedEffect;
 
   @override
   void initState() {
@@ -39,29 +40,57 @@ class _CatalogPageState extends State<CatalogPage> {
     _isFiltered = _selectedFilters.isNotEmpty;
   }
 
-  List<Product> _filterProducts(List<Product> products) {
-    if (_selectedFilters.isEmpty) return products;
+  String _generateTitle() {
+    String title = "Средства";
 
-    return products.where((product) {
-      bool matches = true;
+    if (_selectedFilters.containsKey("Тип кожи")) {
+      title += " для: ${_selectedFilters["Тип кожи"]} кожа";
+    }
 
-      _selectedFilters.forEach((key, value) {
-        if (key == "Тип средства" && product.type != value) matches = false;
-        if (key == "Тип кожи" && !product.skinTypes.contains(value))
-          matches = false;
-        if (key == "Линия косметики" && product.cosmeticsLine != value)
-          matches = false;
-        if (key == "Категория" && product.category != value) matches = false;
-      });
+    if (_selectedFilters.containsKey("Линия косметики")) {
+      title += " линии ${_selectedFilters["Линия косметики"]}";
+    }
 
-      return matches;
-    }).toList();
+    if (_selectedFilters.containsKey("Тип средства")) {
+      title += ", тип: ${_selectedFilters["Тип средства"]}";
+    }
+    return title;
   }
 
+  List<Product> _filterProducts(List<Product> products) {
+    List<Product> filteredProducts = products;
+
+    if (_selectedFilters.isNotEmpty) {
+      filteredProducts = filteredProducts.where((product) {
+        bool matches = true;
+
+        _selectedFilters.forEach((key, value) {
+          if (key == "Тип средства" && product.type != value) matches = false;
+          if (key == "Тип кожи" && !product.skinTypes.contains(value)) {
+            matches = false;
+          }
+          if (key == "Линия косметики" && product.cosmeticsLine != value) {
+            matches = false;
+          }
+          if (key == "Категория" && product.category != value) matches = false;
+        });
+
+        return matches;
+      }).toList();
+    }
+
+    if (_selectedEffect != null) {
+      filteredProducts = filteredProducts
+          .where((product) => product.effect == _selectedEffect)
+          .toList();
+    }
+
+    return filteredProducts;
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(0, 80, 0, 0),
+      padding: const EdgeInsets.fromLTRB(0, 80, 0, 0),
       child: Column(
         children: [
           if (!_isFiltered)
@@ -70,7 +99,7 @@ class _CatalogPageState extends State<CatalogPage> {
               backgroundColor: const WidgetStatePropertyAll(Colors.white),
               hintText: "Поиск",
               hintStyle: WidgetStatePropertyAll(
-                  TextStyle(fontSize: 18, color: Colors.grey.shade600)),
+                  TextStyle(fontSize: 18, color: Colors.grey.shade600),),
               leading: const Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -167,44 +196,49 @@ class _CatalogPageState extends State<CatalogPage> {
                           children: [
                             Container(
                               width: 200,
-                              child: const Text(
-                                "Средства",
+                              child:  Text(
+                                _generateTitle(),
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600, fontSize: 26),
                               ),
                             ),
-                            Text("${testProducts.length} продукта"),
+                            Text(
+                                "${_filterProducts(testProducts).length} продуктов"),
                             const SizedBox(height: 8),
                             SizedBox(
                               height: 50,
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Row(
-                                  children: [
-                                    ElevatedButton(
-                                      onPressed: () {},
-                                      child: const Text(
-                                        "Увлажнение",
-                                        style: TextStyle(color: Colors.black),
+                                  children: options["Эффект"]!.map((effect) {
+                                    final isSelected =
+                                        _selectedEffect == effect;
+                                    return Padding(
+                                      padding: const EdgeInsets.only(right: 10),
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            _selectedEffect =
+                                                isSelected ? null : effect;
+                                          });
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          elevation: 0,
+                                          backgroundColor: isSelected
+                                              ? Colors.black
+                                              : Colors.grey.shade200,
+                                          foregroundColor: isSelected
+                                              ? Colors.white
+                                              : Colors.black,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(11),
+                                          ),
+                                        ),
+                                        child: Text(effect),
                                       ),
-                                    ),
-                                    SizedBox(width: 10),
-                                    ElevatedButton(
-                                      onPressed: () {},
-                                      child: const Text(
-                                        "Очищение",
-                                        style: TextStyle(color: Colors.black),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    ElevatedButton(
-                                      onPressed: () {},
-                                      child: const Text(
-                                        "Регенерация",
-                                        style: TextStyle(color: Colors.black),
-                                      ),
-                                    ),
-                                  ],
+                                    );
+                                  }).toList(),
                                 ),
                               ),
                             ),
@@ -264,7 +298,7 @@ class _CatalogPageState extends State<CatalogPage> {
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
-                      child: Text("Пройти тест"),
+                      child: const Text("Пройти тест"),
                     ),
                   ],
                 ),
